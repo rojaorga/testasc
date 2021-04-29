@@ -20,17 +20,16 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
-- task: ArtifactoryProperties@1
+- task: JFrog.jfrog-artifactory-vsts-extension.artifactory-properties-task.ArtifactoryProperties@1
+  displayName: 'Artifactory set Properties'
   inputs:
-    command: 'del'
     artifactoryService: 'art-test'
-    setProps: 'build.number'
-    specSource: 'taskConfiguration'
+    setProps: 'git.fusion.revision=1'
     fileSpec: |
-    {
-    "files": [
-    {
-    "pattern": "*"
-    }
-    ]
-   }
+     {
+       "files": [
+         {
+           "pattern": "raja-generic-test-local/*.zip"
+         }
+       ]
+     }
