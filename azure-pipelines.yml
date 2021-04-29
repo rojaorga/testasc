@@ -35,13 +35,3 @@ steps:
             }
           ]
       }
-       
-      {
-          "files": [
-            {
-              "pattern": "generic-local/",
-              "target": "my/local/path/",
-              "flat": "false"
-            }
-          ]
-      }
