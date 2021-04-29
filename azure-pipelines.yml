@@ -20,18 +20,18 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+
 - task: ArtifactoryProperties@1
   inputs:
     command: 'set'
     artifactoryService: 'art-test'
+    setProps: 'build.number'
     specSource: 'taskConfiguration'
     fileSpec: |
-      {
-          "files": [
-            {
-              "pattern": "generic-local/{*}",
-              "target": "home/vsts/work/1/s/target/spring-boot-actuator-example-0.0.2-SNAPSHOT.jar",
-              "flat": "true"
-            }
-          ]
-      }
+    {
+    "files": [
+    {
+    "pattern": "*"
+    }
+    ]
+    }
