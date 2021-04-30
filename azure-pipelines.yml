@@ -10,26 +10,12 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'deploy'
 
-- task: ArtifactoryPublishBuildInfo@1
-  inputs:
-    artifactoryService: 'art-test'
-    buildName: '$(Build.DefinitionName)'
-    buildNumber: '$(Build.BuildNumber)'
+
 - task: ArtifactoryMaven@2
   inputs:
     mavenPomFile: 'pom.xml'
-    goals: 'install'
+    goals: 'deploy'
     artifactoryResolverService: 'art-test'
     targetResolveReleaseRepo: 'maven'
     targetResolveSnapshotRepo: 'maven'
@@ -37,5 +23,11 @@ steps:
     targetDeployReleaseRepo: 'maven-local'
     targetDeploySnapshotRepo: 'maven'
     collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+
+- task: ArtifactoryPublishBuildInfo@1
+  inputs:
+    artifactoryService: 'art-test'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
