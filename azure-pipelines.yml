@@ -20,16 +20,16 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'install'
-- task: JFrog.jfrog-artifactory-vsts-extension.artifactory-properties-task.ArtifactoryProperties@1
-  displayName: 'Artifactory set Properties'
+- task: ArtifactoryMaven@2
   inputs:
-    artifactoryService: 'art-test'
-    setProps: 'git.fusion.revision=1'
-    fileSpec: |
-     {
-       "files": [
-         {
-           "pattern": "raja-generic-test-local/*.zip"
-         }
-       ]
-     }
+    mavenPomFile: 'pom.xml'
+    goals: 'install'
+    artifactoryResolverService: 'art-test'
+    targetResolveReleaseRepo: 'maven'
+    targetResolveSnapshotRepo: 'maven'
+    artifactoryDeployService: 'art-test'
+    targetDeployReleaseRepo: 'maven-local'
+    targetDeploySnapshotRepo: 'maven'
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
